@@ -39,7 +39,7 @@ def validate_password(password):
         return False
 
 def index(request):
-    return HttpResponse("Hello world!")
+    return render(request,"home.html")
 
 def register(request):
     context={}
@@ -104,6 +104,7 @@ def login(request):
     if(request.method=="POST"):
         login_as = request.POST['login_as']
         user_nm = request.POST['user']
+        print(user_nm)
         password = request.POST['password']
         context={}
         context['login']=login_user()
@@ -113,8 +114,8 @@ def login(request):
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = student_db.objects.get(student_nm = user_nm, password = hash_password)
                     #user = student_db(name=request.student_nm)
-                    user = student_db.objects.get(student_nm = user_nm)
-                    return render(request,"profile.html")
+                    #user = student_db.objects.get(student_nm = user_nm)
+                    return render(request,"profile.html", {user_nm})
                 except ObjectDoesNotExist:
                     context['error'] = "Invalid Credentials"
                     return render(request,"loog.html",context)
@@ -142,6 +143,9 @@ def profile(request):
         if x.teacher_nm==username:
             uname=x.teacher_nm
             email=x.email
+    print("njckfc")
+    print(uname, email)
+
     return render(request,'profile.html',{'uname':uname,'email':email})
 
 def reset_password(request):
