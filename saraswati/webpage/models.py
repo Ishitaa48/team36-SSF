@@ -10,4 +10,5 @@ class student_db(models.Model):
     student_nm = models.CharField(max_length=30)
     email = models.CharField(max_length=30) 
     password = models.CharField(max_length=30)
-    
+    class_nm = models.CharField(max_length=30,default='')
+    date_nm = models.CharField(max_length = 30, default='')

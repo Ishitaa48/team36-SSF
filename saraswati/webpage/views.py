@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from .forms import user,login_user,reset_psswrd
 from django.template import loader
 from .models import student_db,teacher_db
+from datetime import datetime
 import hashlib
+import sys
 
 # Create your views here.
 
@@ -52,17 +54,23 @@ def register(request):
         password = request.POST['password']
         conf_password = request.POST['confirm_password']
         context['user']=user()
-        if (register_as != "Select" ) and (len(user_nm) != 0) and (len(email) != 0) and (len(password) != 0) and (len(conf_password) != 0):
+        if (register_as != "Select") and (len(user_nm) != 0) and (len(email) != 0) and (len(password) != 0) and (len(conf_password) != 0):
             if len(password) == len(conf_password) and password == conf_password:
                 if(validate_password(password)):
                     if(register_as=="student"):
                         try:
+                            class_nm = request.POST['class_nm']
+                            if(class_nm =="Select"):
+                                context['error'] = "Select your class"
+                                return render(request,"registration.html",context)
                             db = student_db.objects.get(student_nm = user_nm)
                             context['error'] = "Username already Exists, enter again"
                             return render(request,"registration.html",context)
                         except ObjectDoesNotExist:
                             hash_password = hashlib.md5(password.encode()).hexdigest()
-                            db = student_db(student_nm = user_nm, password = hash_password, email = email)
+                            dt = datetime.now()
+                            dt_str = dt.strftime('%d-%m-%Y')
+                            db = student_db(student_nm = user_nm, password = hash_password, email = email, class_nm = class_nm, date_nm = dt_str)
                             db.save()
                             return HttpResponse("User Doesn't exist Registering user")
                     else:
