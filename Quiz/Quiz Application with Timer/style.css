@@ -322,7 +322,7 @@ footer button.show{
 
 .result_box .icon{
     font-size: 100px;
-    color: #007bff;
+    color: #d900ff;
     margin-bottom: 10px;
 }
 
@@ -358,25 +358,25 @@ footer button.show{
     border: none;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #007bff;
+    border: 1px solid #7d2ae8;
     transition: all 0.3s ease;
 }
 
 .buttons button.restart{
     color: #fff;
-    background: #007bff;
+    background: #7d2ae8;
 }
 
 .buttons button.restart:hover{
-    background: #0263ca;
+    background: #7d2ae8;
 }
 
 .buttons button.quit{
-    color: #007bff;
+    color: #7d2ae8;
     background: #fff;
 }
 
 .buttons button.quit:hover{
     color: #fff;
-    background: #007bff;
+    background: #7d2ae8;
 }
