@@ -39,6 +39,15 @@ def validate_password(password):
     else:
         return False
 
+    def profile_admin(request):
+    username=request.session["admin_uname"]
+    mentor=teacher_db.objects.all()
+    for x in mentor:
+        if x.teacher_nm==username:
+            uname=x.teacher_nm
+            email=x.email
+    return render(request,'profile_admin.html',{'uname':uname,'email':email})
+    
 def index(request):
     return HttpResponse("Hello world!")
 
@@ -103,11 +112,11 @@ def register(request):
         return render(request,"registration.html",context)
 
 
-def login(request):
-    if (request.method=="GET"):
-        context={}
-        context['login']=login_user()
-        return render(request,"loog.html",context)
+    def login(request):
+    	if (request.method=="GET"):
+        	context={}
+        	context['login']=login_user()
+        	return render(request,"loog.html",context)
     if(request.method=="POST"):
         login_as = request.POST['login_as']
         user_nm = request.POST['user']
@@ -124,6 +133,8 @@ def login(request):
                     context['error'] = "Invalid Credentials"
                     return render(request,"loog.html",context)
             else:
+                request.session["admin_uname"]=user_nm
+
                 try:
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = teacher_db.objects.get(teacher_nm = user_nm, password = hash_password)
