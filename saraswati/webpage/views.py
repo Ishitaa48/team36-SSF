@@ -116,6 +116,7 @@ def login(request):
                     context['error'] = "Invalid Credentials"
                     return render(request,"loog.html",context)
             else:
+                request.session["admin_uname"]=user_nm
                 try:
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = teacher_db.objects.get(teacher_nm = user_nm, password = hash_password)
@@ -177,3 +178,13 @@ def reset_password(request):
         if (len(conf_password) == 0):
             context['conf_pass_error'] = "Confirm Password cannot be empty"
         return render(request,"passwordReset.html",context)
+
+def profile_admin(request):
+    username=request.session["admin_uname"]
+    mentor=teacher_db.objects.all()
+    for x in mentor:
+        if x.teacher_nm==username:
+            uname=x.teacher_nm
+            email=x.email
+    return render(request,'profile_admin.html',{'uname':uname,'email':email})
+
