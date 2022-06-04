@@ -4,10 +4,11 @@ from django.http import HttpResponse
 from .forms import user,login_user,reset_psswrd
 from django.template import loader
 from .models import student_db,teacher_db
+from datetime import datetime
 import hashlib
+import sys
 
 # Create your views here.
-
 
 def validate_password(password):
     special_characters = ['!','@','#','$','%','^','&','*']
@@ -53,19 +54,25 @@ def register(request):
         password = request.POST['password']
         conf_password = request.POST['confirm_password']
         context['user']=user()
-        if (register_as != "Select" ) and (len(user_nm) != 0) and (len(email) != 0) and (len(password) != 0) and (len(conf_password) != 0):
+        if (register_as != "Select") and (len(user_nm) != 0) and (len(email) != 0) and (len(password) != 0) and (len(conf_password) != 0):
             if len(password) == len(conf_password) and password == conf_password:
                 if(validate_password(password)):
                     if(register_as=="student"):
                         try:
+                            class_nm = request.POST['class_nm']
+                            if(class_nm =="Select"):
+                                context['error'] = "Select your class"
+                                return render(request,"registration.html",context)
                             db = student_db.objects.get(student_nm = user_nm)
                             context['error'] = "Username already Exists, enter again"
                             return render(request,"registration.html",context)
                         except ObjectDoesNotExist:
                             hash_password = hashlib.md5(password.encode()).hexdigest()
-                            db = student_db(student_nm = user_nm, password = hash_password, email = email)
+                            dt = datetime.now()
+                            dt_str = dt.strftime('%d-%m-%Y')
+                            db = student_db(student_nm = user_nm, password = hash_password, email = email, class_nm = class_nm, date_nm = dt_str)
                             db.save()
-                            return render(request, "home.html")
+                            return HttpResponse("User Doesn't exist Registering user")
                     else:
                         try:
                             db = teacher_db.objects.get(teacher_nm = user_nm)
@@ -75,7 +82,7 @@ def register(request):
                             hash_password = hashlib.md5(password.encode()).hexdigest()
                             db = teacher_db(teacher_nm = user_nm,password = hash_password, email = email)
                             db.save()
-                            return render(request, "home.html")
+                            return HttpResponse("User Doesn't exist Registering user")
                 else:
                     context['pass_error'] = "Password should contain minimum of 8 characters, maximum of 20 characters, atleast a lower case an an upper case alphabets, a number and a special character among !@#$%^&*, spaces not allowed"
                     return render(request,"registration.html",context)
@@ -112,14 +119,11 @@ def login(request):
                 try:
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = student_db.objects.get(student_nm = user_nm, password = hash_password)
-                    #user = student_db(name=request.student_nm)
-                    user = student_db.objects.get(student_nm = user_nm)
-                    return render(request,"profile.html")
+                    return HttpResponse("Student login successful")
                 except ObjectDoesNotExist:
                     context['error'] = "Invalid Credentials"
                     return render(request,"loog.html",context)
             else:
-                request.session["admin_uname"]=user_nm
                 try:
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = teacher_db.objects.get(teacher_nm = user_nm, password = hash_password)
@@ -134,15 +138,6 @@ def login(request):
         if (len(password) == 0):
             context['pass_error'] = "Password cannot be empty"
         return render(request,"loog.html",context)
-
-def profile(request):
-    username=request.session["admin_uname"]
-    mentor=teacher_db.objects.all()
-    for x in mentor:
-        if x.teacher_nm==username:
-            uname=x.teacher_nm
-            email=x.email
-    return render(request,'profile.html',{'uname':uname,'email':email})
 
 def reset_password(request):
     if (request.method=="GET"):
@@ -190,7 +185,4 @@ def reset_password(request):
         if (len(conf_password) == 0):
             context['conf_pass_error'] = "Confirm Password cannot be empty"
         return render(request,"passwordReset.html",context)
-
-
-
-        
+            
