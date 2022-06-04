@@ -1,104 +1,153 @@
 <!DOCTYPE html>
-<html></html>
-<body>
-    <h1>For Nineth and Tenth</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form1.as_p }}
-        <input type="submit" class="btn btn-success" value="Add">
-    </form>
-    <h1>For Inter</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form2.as_p }}
-        <input type="submit" class="btn btn-success" value="Add">
-    </form>
-        <h4 >Nineth and tenth questions</h4>
-        {% if school %}
-        <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Question</th>
-                <th scope="col">option1</th>
-                <th scope="col">option2</th>
-                <th scope="col">option3</th>
-                <th scope="col">option4</th>
-                <th scope="col">answer</th>
-                <th scope="col">subject</th>
-                <th scope="col">taxonomy</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for st in school %}
-              <tr>
-                <th scope="row">{{st.id}}</th>
-                <td>{{st.Question}}</td>
-                <td>{{st.op1}}</td>
-                <td>{{st.op2}}</td>
-                <td>{{st.op3}}</td>
-                <td>{{st.op4}}</td>
-                <td>{{st.ans}}</td>
-                <td>{{st.subject}}</td>
-                <td>{{st.Taxonomy}}</td>
-                <td>
-                    <a href="{% url 'updatedata' st.id%}">Edit</a>
-                    <form action="{% url 'deletedata' st.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% else %}
-            <h4  class="text-center alert alert-warning">No records</h4>
-        {% endif %}
-
-<br><br>
-        <h4 >Inter questions</h4>
-        {% if inter %}
-        <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Question</th>
-                <th scope="col">option1</th>
-                <th scope="col">option2</th>
-                <th scope="col">option3</th>
-                <th scope="col">option4</th>
-                <th scope="col">answer</th>
-                <th scope="col">subject</th>
-                <th scope="col">Taxonomy</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for st in inter %}
-              <tr>
-                <th scope="row">{{st.id}}</th>
-                <td>{{st.Questions}}</td>
-                <td>{{st.opt1}}</td>
-                <td>{{st.opt2}}</td>
-                <td>{{st.opt3}}</td>
-                <td>{{st.opt4}}</td>
-                <td>{{st.answer}}</td>
-                <td>{{st.subject}}</td>
-                <td>{{st.Taxonomy}}</td>
-                <td>
-                    <a href="{% url 'updatedatas' st.id%}">Edit</a>
-                    <form action="{% url 'deletedatas' st.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete">
-                    </form>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% else %}
-            <h4  class="text-center alert alert-warning">No records</h4>
-        {% endif %}
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" href="upload_ques.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background:#7D2AE8;">
+    <nav class="navbar navbar-inverse" style="background-color:black;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'admin_home' %}">SARASWATI SEVA FOUNDATION</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="#">STUDENT'S PERFORMANCE</a></li>
+              <li><a href="#">UPLOAD QUESTIONS</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+              <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <center>
+<div class="container">
+  <h2>For Nineth and and tenth</h2>
+    <div class="form-group">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form1.as_p }}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
     </div>
+    <hr>
 </div>
+
+<div class="container">
+    <h2>Nineth and Tenth</h2>
+    {% if school %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Question</th>
+          <th>Option 1</th>
+          <th>Option 2</th>
+          <th>Option 3</th>
+          <th>Option 4</th>
+          <th>Answer</th>
+          <th>Subject</th>
+          <th>Taxonomy</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for st in school %}
+          <tr>
+              <th scope="row">{{st.id}}</th>
+              <td>{{st.Question}}</td>
+              <td>{{st.op1}}</td>
+              <td>{{st.op2}}</td>
+              <td>{{st.op3}}</td>
+              <td>{{st.op4}}</td>
+              <td>{{st.ans}}</td>
+              <td>{{st.subject}}</td>
+              <td>{{st.Taxonomy}}</td>
+              <td>
+                  <a href="{% url 'updatedata' st.id%}">Edit</a>
+                  <form action="{% url 'deletedata' st.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="submit" value="Delete">
+                  </form>
+              </td>
+            </tr>
+            {%endfor%}
+      </tbody>
+    </table>
+    {% else %}
+              <h4  class="text-center alert alert-warning">No records</h4>
+          {% endif %}
+    </div>
+  </div>
+  <hr>
+
+<div class="container">
+    <h2>For Inter</h2>
+      <div class="form-group">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+      </div>
+      <hr>
+  </div>
+  
+<div class="container">
+    <h2>Inter</h2>
+    {% if inter %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Question</th>
+          <th>Option 1</th>
+          <th>Option 2</th>
+          <th>Option 3</th>
+          <th>Option 4</th>
+          <th>Answer</th>
+          <th>Subject</th>
+          <th>Taxonomy</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for st in inter %}
+        <tr>
+          <th scope="row">{{st.id}}</th>
+          <td>{{st.Questions}}</td>
+          <td>{{st.opt1}}</td>
+          <td>{{st.opt2}}</td>
+          <td>{{st.opt3}}</td>
+          <td>{{st.opt4}}</td>
+          <td>{{st.answer}}</td>
+          <td>{{st.subject}}</td>
+          <td>{{st.Taxonomy}}</td>
+          <td>
+              <a href="{% url 'updatedatas' st.id%}">Edit</a>
+              <form action="{% url 'deletedatas' st.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="submit" value="Delete">
+              </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h4  class="text-center alert alert-warning">No records</h4>
+{% endif %}
+    </div>
+  </div>
+</center>
 </body>
+</html>

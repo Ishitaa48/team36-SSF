@@ -1,0 +1,84 @@
+@import url(./fonts.css); 
+@import url(./partials/_variables.css);
+@import url(./partials/_global.css);
+.site-main{
+    position: fixed;
+}
+.site-main .site-banner .site-title h3{
+    padding-top: 30%;
+    font-weight: 500;
+}
+.site-main .site-banner .site-title h3::after{
+    height: 2px;
+    width: 18vw;
+    background:black;
+    display: inline-block;
+    margin-left: 5%;
+    transform: translateY(-10px);
+}
+.site-main .site-banner .site-title h1{
+    font-size: 5rem;
+}
+.site-main .site-banner .site-title h4{
+    font-size: 1.5rem;
+}
+.site-main .site-banner .banner-image > img{
+    padding: 7rem 0;
+    width: 80rem;
+}
+
+ .btn{
+     background: blue;
+ }
+ .site-main .about-area{
+    padding: 8rem 5rem;
+}
+
+.site-main .about-area .about-title h2 > span{
+    display: block;
+    font: normal bold 49px/ 60px var(--roboto);
+    letter-spacing: 21px;
+}
+
+.site-main .about-area .about-title .paragraph > p{
+    padding: .4rem 0;
+}
+.site-main .site-but{
+    position: relative;
+    top:0%;
+    left:70%;
+}
+.site-main .about-area{
+    padding-top: 50%;
+}  
+.titletext{
+    position: absolute;
+    top:45%;
+    left:65%;
+    font-weight: bold;
+    font-size:70px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.titext{
+    position:absolute;
+    top:50%;
+    left:20%;
+    font-weight: bold;
+    font-size:50px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.navbar{
+    height:60px;
+}
+.sty{
+    color:blue;
+}
+.circle{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #7D2AE8;
+    clip-path: circle(600px at right 800px);
+}

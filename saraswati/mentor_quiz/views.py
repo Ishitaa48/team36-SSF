@@ -4,6 +4,9 @@ from .forms import NineTenform,Interform
 from .models import NineTen,Inter
 
 # Create your views here.
+def admin_home(request):
+    return render(request,'base.html')
+
 def add_show(request):
     if request.method =='POST':
         fm=NineTenform(request.POST)
