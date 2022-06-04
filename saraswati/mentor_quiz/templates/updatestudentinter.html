@@ -1,0 +1,15 @@
+<html>
+<body>
+<div class="row">
+    <div class="col-sm-8 offset-2">
+        <h4 class="alert alert-info">Update Inter Student Information</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-success" value="Update">
+            <a href="{% url 'add_show' %}" class="btn btn-info">Back to home</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
