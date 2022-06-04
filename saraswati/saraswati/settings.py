@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mentor_quiz',
+    'webpage',
+    'saraswati'
 ]
 
 MIDDLEWARE = [
