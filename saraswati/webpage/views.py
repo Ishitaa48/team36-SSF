@@ -185,3 +185,4 @@ def reset_password(request):
         if (len(conf_password) == 0):
             context['conf_pass_error'] = "Confirm Password cannot be empty"
         return render(request,"passwordReset.html",context)
+            
