@@ -73,12 +73,12 @@
                 {{input_error}}
                 {{conf_pass_error}}
                 <br>
-                <form action="#" method="post">
+                <form action="" method="post">
                     {% csrf_token %}    
                     {{user.as_p}}
                     <div class="form-row">
                         <div class="col-lg-7" style="padding-top:10px;padding-bottom:10px">
-                            <button type="submit" name="register_as" value = "Register" class="btn1 mt-3 mb-2">Register</button>
+                            <button type="submit" value = "Register" class="btn1 mt-3 mb-2">Register</button>
                         </div>
                     </div>
                     

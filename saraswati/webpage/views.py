@@ -73,7 +73,7 @@ def register(request):
                         try:
                             db = student_db.objects.get(student_nm = user_nm)
                             context['error'] = "Username already Exists, enter again"
-                            return render(request,"registration.html",context)
+                            return render(request,'registration.html',context)
                         except ObjectDoesNotExist:
                             hash_password = hashlib.md5(password.encode()).hexdigest()
                             dt = datetime.now()
@@ -85,7 +85,7 @@ def register(request):
                         try:
                             db = teacher_db.objects.get(teacher_nm = user_nm)
                             context['error'] = "Username already Exists, enter again"
-                            return render(request,"registration.html",context)
+                            return render(request,'registration.html',context)
                         except ObjectDoesNotExist:
                             hash_password = hashlib.md5(password.encode()).hexdigest()
                             db = teacher_db(teacher_nm = user_nm,password = hash_password, email = email)
@@ -125,6 +125,7 @@ def login(request):
         context['login']=login_user()
         if(login_as != "Select" and len(user_nm) != 0 and len(password) != 0):
             if login_as == "student":
+                request.session["student_uname"]=user_nm
                 try:
                     hash_password = hashlib.md5(password.encode()).hexdigest()
                     db = student_db.objects.get(student_nm = user_nm, password = hash_password)
@@ -154,7 +155,7 @@ def login(request):
         return render(request,"loog.html",context)
 
 def profile(request):
-    username=request.session["admin_uname"]
+    username=request.session["student_uname"]
     mentor=teacher_db.objects.all()
     for x in mentor:
         if x.teacher_nm==username:
