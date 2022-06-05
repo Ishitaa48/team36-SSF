@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    <body>
-        {{user}}
-        {{email}}
-    </body>
+<div class="card text-white bg-primary mb-3" style="max-width: 37rem;">
+    <div class="card-header"><h1>{{uname}}</h1></div>
+    <div class="card-body">
+      <h5 class="card-title">{{email}}</h5>
+    </div>
+  </div>
 {% endblock %}

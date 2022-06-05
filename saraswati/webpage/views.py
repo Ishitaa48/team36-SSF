@@ -119,7 +119,6 @@ def login(request):
     if(request.method=="POST"):
         login_as = request.POST['login_as']
         user_nm = request.POST['user']
-        print(user_nm)
         password = request.POST['password']
         context={}
         context['login']=login_user()
@@ -156,10 +155,10 @@ def login(request):
 
 def profile(request):
     username=request.session["student_uname"]
-    mentor=teacher_db.objects.all()
+    mentor=student_db.objects.all()
     for x in mentor:
-        if x.teacher_nm==username:
-            uname=x.teacher_nm
+        if x.student_nm==username:
+            uname=x.student_nm
             email=x.email
     return render(request,'profile.html',{'uname':uname,'email':email})
 
